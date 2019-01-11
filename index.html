@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- 视口，屏幕的宽度1：1，不允许缩放 -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+    <!--  浏览器不缓存，每次都去服务器拉取 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <!-- 不自动识别手机号码 -->
+    <meta name="format-detection" content="telephone=no" >
+
+    <title>测试弹框组件</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="layAway.css">
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        .line-block{
+            float: left;
+            width: 250px;
+            height: 250px;
+            border:1px solid #ccc;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            line-height: 250px;
+            text-align: center;
+            margin: 20px;
+            cursor: pointer;
+            user-select: none;
+            overflow: hidden;
+        }
+        .line-block img{
+            width: 100%;
+            height: 100%;
+        }
+
+        .lay-image-pagination{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .lay-image-pagination li{
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid #ffffff;
+            list-style-type: none;
+            display: inline-block;
+            margin: 0 3px;
+            cursor: pointer;
+            transition: .4s all;
+            position: relative;
+        }
+        .lay-image-pagination li:before{
+            content: '.';
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: .8rem;
+            color: #ffffff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            line-height: 3px;
+        }
+        .lay-image-pagination li:hover{
+            transform: scale(1.2);
+            background: #ffffff;
+        }
+        .lay-image-pagination .active{
+            background-color: #ffffff;
+            transform: scale(1.2);
+        }
+        .lay-image-pagination .active:before{
+            color: transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="line-block" data-type="load">加载层</div>
+    <div class="line-block" data-type="msg">提示层</div>
+    <div class="line-block" data-type="image"><img class="layimg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546604102457&di=de9935fabf26b03c1056e143025df3e5&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F98a4359a9d2e4710c02a145d9c705c013e156aaa.jpg" alt=""></div>
+    <div class="line-block" data-type="image"><img class="layimg" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3429985185,1488662648&fm=26&gp=0.jpg" alt=""></div>
+    <div class="line-block" data-type="image"><img class="layimg" src="http://img.article.pchome.net/00/50/59/93/pic_lib/wm/02.jpg" alt=""></div>
+    <div class="line-block" data-type="image"><img class="layimg" src="http://s9.knowsky.com/bizhi/l/20100615/20109119%20%286%29.jpg" alt=""></div>
+    <div class="line-block" data-type="image"><img class="layimg" src="http://pic32.nipic.com/20130802/13059255_195443210152_2.jpg" alt=""></div>
+    <div class="line-block" data-type="msg">提示层</div>
+    <div class="line-block" data-type="image"><img class="layimg" src="http://h.hiphotos.baidu.com/zhidao/pic/item/ac6eddc451da81cb167b12945466d016082431cd.jpg" alt=""></div>
+    <div class="line-block" data-type="image"><img class="layimg" src="http://img5.duitang.com/uploads/item/201207/28/20120728125753_YjErH.jpeg" alt=""></div>
+</div>
+</body>
+<script src="jquery.min.js"></script>
+<script src="layAway.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $('.line-block').on('click',function(event){
+
+            /**
+             * @param type 弹出层的类型
+             * @param content 弹出层展示的内容 load层不需要此参数 消息层是文本或者html 图片层是图片url
+             */
+            var type = $(this).attr("data-type"),content = '';
+
+            if (typeof type != 'undefined') {
+                if (type == 'load') {
+                    content = false
+                } else if (type == 'msg') {
+                    content = '这是提示消息'
+                } else {
+                    content = $(this).children("img").attr("src")
+                }
+            }
+            lay({
+                type: $(this).attr("data-type"),
+                content: content,
+                swiper: true,
+                closeOther: true,
+                before: function(){
+
+                }
+            });
+        })
+    })
+
+</script>
+</html>
